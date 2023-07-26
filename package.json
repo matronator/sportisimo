@@ -1,0 +1,24 @@
+{
+  "name": "vite-project",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build && npm run sass",
+    "sass": "sass frontend/styles/main.scss www/assets/main.css --no-source-map --style=compressed --quiet-deps",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@types/materialize-css": "^1.0.11",
+    "autoprefixer": "^10.4.14",
+    "sass": "^1.64.1",
+    "typescript": "^5.1.6",
+    "vite": "^4.4.6"
+  },
+  "dependencies": {
+    "axette": "^2.0.8",
+    "fast-glob": "^3.3.1",
+    "materialize-css": "1.0.0-rc.2"
+  }
+}

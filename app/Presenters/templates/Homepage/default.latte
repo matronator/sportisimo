@@ -1,0 +1,74 @@
+{block content}
+
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col s10">
+			<h1>Homepage</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col s10">
+			{snippet brands}
+				<a n:href="setSort! true" class="ajax btn btn-small waves-effect red lighten-2 waves-dark {$sort === 'DESC' ? 'disabled'}"><i class="material-icons">arrow_downward</i></a>
+				<a n:href="setSort! false" class="ajax btn btn-small waves-effect red lighten-2 waves-dark {$sort === 'ASC' ? 'disabled'}"><i class="material-icons">arrow_upward</i></a>
+				<ul class="collection with-header">
+					<li class="collection-header flex justify-content-between align-items-center">
+						<h5>Brands</h5>
+						<button data-target="addBrandModal" id="addBrandModalBtn" class="modal-trigger btn btn-small waves-effect green lighten-2 waves-dark"><i class="material-icons">add</i></button>
+					</li>
+					<li class="collection-item flex justify-content-between align-items-center" n:foreach="$brands as $brand">
+						<div>{$brand->name}</div>
+						<div>
+							<a href="#" data-target="addBrandModal" data-brand-id="{$brand->id}" data-brand-name="{$brand->name}" id="addBrandModalBtn" class="modal-trigger blue-text"><i class="material-icons">edit</i></a>
+							<a n:href="deleteBrand! $brand->id" class="ajax red-text"><i class="material-icons">delete</i></a>
+						</div>
+					</li>
+				</ul>
+				<div id="addBrandModal" class="modal">
+					<div class="modal-content">
+						<h4 id="brandModalTitle">Add new brand</h4>
+						{form editBrandForm}
+							<div class="input-field" id="brandNameInput">
+								{input name}
+								{label name /}
+							</div>
+
+							<div id="brandIdInput">
+								{input id}
+							</div>
+
+							<button class="waves-effect green waves-light btn modal-close" n:name="save">Save</button>
+						{/form}
+					</div>
+					<div class="modal-footer">
+						<button class="modal-close waves-effect waves-red btn-flat">Close</button>
+					</div>
+				</div>
+			{/snippet}
+		</div>
+		<div class="col s10">
+			{if $maxPages > 1}
+				{snippet pagination}
+					<ul class="pagination">
+						<li n:class="$page === 1 ? 'disabled'">
+							<a {if $page === 1} href="#"{else} href="{plink setPage! 1}"{/if} class="ajax">
+								<i class="material-icons">chevron_left</i>
+							</a>
+						</li>
+						<li n:if="$page > 3" class="{$page === 1 ? 'active' : 'waves-effect'}"><a n:href="setPage! 1" class="ajax">1</a></li>
+						<li n:if="$page > 4" class="disabled"><span>&hellip;</span></li>
+						{for $i = 1; $i <= $maxPages; $i++}
+							<li n:if="$i < $page + 3 && $i > $page - 3" class="{$i === $page ? 'active' : 'waves-effect'}">
+								<a n:href="setPage! $i" class="ajax">{$i}</a>
+							</li>
+						{/for}
+						<li n:if="$page < $maxPages - 3" class="disabled"><span>&hellip;</span></li>
+						<li n:if="$page < $maxPages - 2" class="{$page === $maxPages ? 'active' : 'waves-effect'}"><a n:href="setPage! $maxPages" class="ajax">{$maxPages}</a></li>
+						<li n:class="$page === $maxPages ? 'disabled'"><a {if $page === $maxPages} href="#"{else} href="{plink setPage! $maxPages}"{/if} class="ajax"><i class="material-icons">chevron_right</i></a></li>
+					</ul>
+				{/snippet}
+			{/if}
+		</div>
+	</div>
+</div>
+

@@ -1,0 +1,25 @@
+search:
+	services:
+		in: %appDir%
+		classes:
+			- *Factory
+			- *Facade
+
+	repositories:
+		in: %appDir%/Database/Model
+		exclude:
+			classes:
+				- App\Database\Model\BaseRepository
+		classes:
+			- *Repository
+
+extensions:
+    vite: App\Extensions\Vite\Nette\Extension
+
+vite:
+    manifestFile: %wwwDir%/manifest.json
+    templateProperty: vite
+    basePath: /
+
+services:
+	- App\Router\RouterFactory::createRouter
